@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  roles:
+  - role: jpic.pacman
+    pacman_mirrors:
+    - http://arch.yourlabs.org/
+    pacman_repositories:
+    - name: yourlabs
+      url: http://arch.yourlabs.org/$repo/os/$arch
+  - role: jpic.iptables
+    iptables_filter_open_tcp_ports:
+    - 22
+    iptables_nat_rules:
+    - -A POSTROUTING -o eth0 -j MASQUERADE
+    sudo: yes
+  - role: .

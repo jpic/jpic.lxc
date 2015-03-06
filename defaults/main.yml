@@ -1,0 +1,5 @@
+---
+
+lxc_bridge_iface: lxcbr0
+lxc_bridge_bind: 
+- eth0

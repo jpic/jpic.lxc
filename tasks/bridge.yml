@@ -1,0 +1,23 @@
+---
+
+- template:
+    src: lxcbridge
+    dest: /etc/netctl/lxcbridge
+  register: lxc_netctl
+  sudo: yes
+
+- shell: netctl reenable lxcbridge
+  sudo: yes
+  when: lxc_netctl.changed
+
+- shell: netctl restart lxcbridge
+  sudo: yes
+  when: lxc_netctl.changed
+
+- sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    state: present
+    reload: yes
+    sysctl_file: /etc/sysctl.d/40-ip-forward.conf
+  sudo: yes

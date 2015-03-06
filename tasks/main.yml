@@ -1,0 +1,7 @@
+---
+
+- include: install_arch.yml
+
+- include: configure.yml
+
+- include: bridge.yml
