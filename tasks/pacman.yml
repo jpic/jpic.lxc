@@ -1,0 +1,13 @@
+---
+
+- pacman: name=debootstrap,debian-archive-keyring,gnupg1 state=installed
+  sudo: yes
+  when: lxc_debian_guests
+
+- pacman: name=dnsmasq,polkit,lxc,bridge-utils,arch-install-scripts state=installed
+  sudo: yes
+  #
+  #- file:
+  #    path: /var/lib/misc/dnsmasq.leases
+  #    owner: dnsmasq
+  #  sudo: yes

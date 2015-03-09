@@ -1,7 +1,11 @@
 ---
 
-- include: install_arch.yml
+- include: pacman.yml
+
+- include: netctl.yml
+
+- include: dnsmasq.yml
+
+- include: sysctl.yml
 
 - include: configure.yml
-
-- include: bridge.yml

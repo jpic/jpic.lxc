@@ -8,10 +8,19 @@
     pacman_repositories:
     - name: yourlabs
       url: http://arch.yourlabs.org/$repo/os/$arch
+
   - role: jpic.iptables
-    iptables_filter_open_tcp_ports:
-    - 22
+    iptables_filter_ports:
+    - port: 22
     iptables_nat_rules:
-    - -A POSTROUTING -o eth0 -j MASQUERADE
+    - -A POSTROUTING -s {{ lxc_bridge_address }} -j MASQUERADE
+    iptables_mangle_rules:
+    - -A POSTROUTING -s {{ lxc_bridge_address }} -p udp -m udp --dport 67 -j CHECKSUM --checksum-fill
+    iptables_filter_rules:
+    - -A FORWARD -i {{ lxc_bridge_interface }} -j ACCEPT
+    - -A FORWARD -o {{ lxc_bridge_interface }} -j ACCEPT
+    - -A INPUT -i {{ lxc_bridge_interface }} -j ACCEPT
     sudo: yes
+
   - role: .
+    sudo: yes

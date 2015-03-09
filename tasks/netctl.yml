@@ -1,0 +1,12 @@
+---
+
+- template:
+    src: netctl
+    dest: /etc/netctl/{{ lxc_netctl_profile_name }}
+  register: lxc_netctl
+
+- shell: netctl reenable {{ lxc_netctl_profile_name }}
+  when: lxc_netctl.changed
+
+- shell: netctl restart {{ lxc_netctl_profile_name }}
+  when: lxc_netctl.changed

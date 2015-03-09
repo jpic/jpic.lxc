@@ -1,0 +1,14 @@
+---
+
+- template:
+    src: dnsmasq.conf
+    dest: '{{ lxc_dnsmasq_config_path }}'
+
+- template:
+    src: dnsmasq.service
+    dest: /etc/systemd/system/{{ lxc_dnsmasq_service_name }}
+
+- service:
+    name: '{{ lxc_dnsmasq_service_name }}'
+    state: started
+    enabled: yes

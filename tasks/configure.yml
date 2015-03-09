@@ -1,1 +1,5 @@
 ---
+
+- template:
+    src: lxc.default.conf
+    dest: /etc/lxc/default.conf

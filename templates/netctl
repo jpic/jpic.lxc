@@ -1,6 +1,7 @@
 Description="LXC Bridge"
-Interface={{ lxc_bridge_iface }}
+Interface={{ lxc_bridge_interface }}
 Connection=bridge
 BindsToInterfaces=({{ lxc_bridge_bind|join(' ') }})
-IP=dhcp
+IP=static
+Address={{ lxc_bridge_address }}
 SkipForwardingDelay=yes

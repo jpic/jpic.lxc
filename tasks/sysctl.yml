@@ -1,0 +1,8 @@
+---
+
+- sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    state: present
+    reload: yes
+    sysctl_file: '{{ lxc_systctl_conf }}'

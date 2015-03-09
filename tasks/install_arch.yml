@@ -1,4 +1,0 @@
----
-
-- pacman: name=lxc,bridge-utils,arch-install-scripts,debootstrap state=installed
-  sudo: yes
