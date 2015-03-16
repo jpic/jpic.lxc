@@ -1,7 +1,7 @@
 jpic.lxc
 ========
 
-Manage lxc on gentoo linux.
+Setup LXC, Debian and Arch Linux.
 
 License
 -------
