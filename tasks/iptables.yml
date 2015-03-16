@@ -1,0 +1,5 @@
+---
+
+- shell: iptables-save
+  changed_when: false
+  register: lxc_iptables_save

@@ -1,0 +1,6 @@
+---
+
+- template:
+    dest: /etc/network/interfaces
+    src: interfaces
+  notify: restart networking

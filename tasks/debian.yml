@@ -1,0 +1,12 @@
+---
+
+- service:
+    name: lxc
+    state: started
+    enabled: yes
+
+- mount:
+    fstype: cgroup
+    name: /sys/fs/cgroup
+    src: cgroup
+    state: mounted

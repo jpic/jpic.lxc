@@ -1,0 +1,29 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+allow-hotplug eth0
+iface eth0 inet dhcp
+
+auto {{ lxc_bridge_interface }}
+iface {{ lxc_bridge_interface }} inet static
+    pre-up brctl addbr {{ lxc_bridge_interface }}
+    post-down brctl delbr {{ lxc_bridge_interface }}
+    bridge_fd 0
+    bridge_maxwait 0
+    address {{ lxc_bridge_address.split('/')[0] }}
+    netmask 255.255.255.0
+    dns-nameserver {{ lxc_bridge_address.split('/')[0] }}
+    dns-search local
+    post-up iptables -A FORWARD -i {{ lxc_bridge_interface }} -s {{ lxc_bridge_address }} -j ACCEPT
+    post-down iptables -D FORWARD -i {{ lxc_bridge_interface }} -s {{ lxc_bridge_address }} -j ACCEPT
+    post-up iptables -A POSTROUTING -t nat -s {{ lxc_bridge_address }} -j MASQUERADE
+    post-down iptables -D POSTROUTING -t nat -s {{ lxc_bridge_address }} -j MASQUERADE
+    post-up iptables -A POSTROUTING -t mangle -p udp --dport bootpc -s {{ lxc_bridge_address }} -j CHECKSUM --checksum-fill
+    post-down iptables -D POSTROUTING -t mangle -p udp --dport bootpc -s {{ lxc_bridge_address }} -j CHECKSUM --checksum-fill
+    post-up dnsmasq --interface={{ lxc_bridge_interface }} --conf-file={{ lxc_dnsmasq_config_path }} --pid-file=/var/run/lxc-dnsmasq.pid
+    post-down kill $(cat /var/run/lxc-dnsmasq.pid)

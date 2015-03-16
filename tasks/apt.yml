@@ -1,0 +1,4 @@
+---
+
+- apt: name=lxc,dnsmasq-base,bridge-utils,resolvconf state=present
+  sudo: yes
