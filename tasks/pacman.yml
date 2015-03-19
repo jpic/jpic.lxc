@@ -4,7 +4,7 @@
   sudo: yes
   when: lxc_debian_guests
 
-- pacman: name=dnsmasq,polkit,lxc,bridge-utils,arch-install-scripts state=installed
+- pacman: name=netctl,dnsmasq,polkit,lxc,bridge-utils,arch-install-scripts state=installed
   sudo: yes
   #
   #- file:
