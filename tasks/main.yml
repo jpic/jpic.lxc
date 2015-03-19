@@ -1,13 +1,13 @@
 ---
 
 - include: pacman.yml
-  when: ansible_os_family == 'Arch'
+  when: ansible_os_family == 'Archlinux'
 
 - include: apt.yml
   when: ansible_os_family == 'Debian'
 
 - include: netctl.yml
-  when: ansible_os_family == 'Arch'
+  when: ansible_os_family == 'Archlinux'
 
 - include: ifconfig.yml
   when: ansible_os_family == 'Debian'
