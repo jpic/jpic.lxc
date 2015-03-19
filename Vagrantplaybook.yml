@@ -15,18 +15,29 @@
     - name: yourlabs
       url: http://arch.yourlabs.org/$repo/os/$arch
 
-  - role: jpic.iptables
-    iptables_filter_ports:
-    - port: 22
-    iptables_nat_rules:
-    - -A POSTROUTING -s {{ lxc_bridge_address }} -j MASQUERADE
-    iptables_mangle_rules:
-    - -A POSTROUTING -s {{ lxc_bridge_address }} -p udp -m udp --dport 67 -j CHECKSUM --checksum-fill
-    iptables_filter_rules:
-    - -A FORWARD -i {{ lxc_bridge_interface }} -j ACCEPT
-    - -A FORWARD -o {{ lxc_bridge_interface }} -j ACCEPT
-    - -A INPUT -i {{ lxc_bridge_interface }} -j ACCEPT
-    sudo: yes
-
   - role: .
     sudo: yes
+
+  - role: jpic.iptables
+    iptables:
+    - name: Allow forward on anything going out of LXC's subnet
+      table: filter
+      chain: FORWARD
+      rule: -s {{ lxc_network }} -j ACCEPT
+
+    - name: DNAT/SNAT everything going out of LXC's subnet
+      table: nat
+      chain: POSTROUTING
+      rule: -s {{ lxc_network }} -j MASQUERADE
+
+    - name: Needed for LXC containers to get an ip from the host
+      name: Maybe covering for the MASQUERADE ?
+      table: mangle
+      chain: POSTROUTING
+      rule:
+      - m udp
+      - s {{ lxc_network }}
+      - p udp
+      - dport 68
+      - j CHECKSUM
+      - checksum-fill
