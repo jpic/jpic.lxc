@@ -6,8 +6,3 @@
 
 - pacman: name=netctl,dnsmasq,polkit,lxc,bridge-utils,arch-install-scripts state=installed
   sudo: yes
-  #
-  #- file:
-  #    path: /var/lib/misc/dnsmasq.leases
-  #    owner: dnsmasq
-  #  sudo: yes
