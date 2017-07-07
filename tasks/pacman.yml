@@ -1,6 +1,6 @@
 ---
 
-- pacman: name=debootstrap,debian-archive-keyring,gnupg1 state=installed
+- pacman: name=debootstrap,debian-archive-keyring,gnupg state=installed
   sudo: yes
   when: lxc_debian_guests
 
