@@ -1,8 +1,9 @@
+
 ---
 
 - pacman: name=debootstrap,debian-archive-keyring,gnupg state=installed
-  sudo: yes
+  become: yes
   when: lxc_debian_guests
 
 - pacman: name=netctl,dnsmasq,polkit,lxc,bridge-utils,arch-install-scripts state=installed
-  sudo: yes
+  become: yes
